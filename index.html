@@ -1,0 +1,102 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="myDIV" class="header">
+    <h2>My To Do List</h2>
+    <input type="text" id="myInput" placeholder="Title...">
+    <span onclick="newElement()" class="addBtn">Add</span>
+  </div>
+
+  <ul id="myUL">
+    <!-- <li>Hit the gym</li>
+    <li class="checked">Pay bills</li>
+    <li>Meet George</li>
+    <li>Buy eggs</li>
+    <li>Read a book</li>
+    <li>Organize office</li> -->
+  </ul>
+  <script>
+    // Create a "close" button and append it to each list item
+    var myNodelist = document.getElementsByTagName("LI"); // đặt biến myNodelist là các thẻ li trong html
+    //document.getElementsByTagName() trả về tất cả phần tử của tên thẻ được chỉ định.
+    for (var i = 0; i < myNodelist.length; i++) { // tạo vòng lặp for
+      var span = document.createElement("SPAN");
+      //tạo ra thẻ span và đặt cho nó biến một biến tên span(span này là nút close nội dung)
+      var txt = document.createTextNode("\u00D7");
+      //Phương thức createTextNode() được sử dụng để tạo nội dung văn bản.
+      //Nội dung văn bản có thể được gán cho một node nào đó đã được tạo trước đó bởi phương thức createElement().
+      span.className = "close"; // đặt tên class "close" cho thẻ span đó
+      span.appendChild(txt); // Sau khi đã gán nội dung cho node đã tạo,
+      //sử dụng phương thức element.appendChild() để gắn node đó vào trang.
+      //gắn thẻ node (txt) vào  span
+      myNodelist[i].appendChild(span);// gắn thẻ span vào myNodelist tại vị trí i
+    }
+
+    // Click on a close button to hide the current list item
+    var close = document.getElementsByClassName("close"); 
+    //phương thức getElementsByClassName() :
+    //trả về một tập hợp tất cả các phần tử trong tài liệu với tên lớp được chỉ định
+    //*ở đây có nghĩa là lấy tất cả phần tử chứa lớp "close"
+    for (var i = 0; i < close.length; i++) {
+      close[i].onclick = function () {  //tại click biến close vị trí = hàm function
+        var div = this.parentElement;
+        //this là biểu tưởng  muốn kích hoạt
+        //this.parentElement là element cha của div,ảnh hưởng toàn bộ những nơi đặt biến close
+        div.style.display = "none"; //đặt style display = none cho biến div
+      }
+    }
+
+    // Add a "checked" symbol when clicking on a list item
+    var list = document.querySelector("ul");
+    list.addEventListener("click", function (ev) {
+      //javascripp even: là một sự kiện sảy ra với các event như: click;dblclick,mousedown,mouseup...
+      //addEventListener = thêm một sự kiện(tại đây sự kiện là khi click vào hàm function(ev))
+      if (ev.target.tagName === "LI") { 
+        ev.target.classList.toggle("checked");
+        //target là element mà sự kiện đó xảy ra
+        //toggle = hiện hay ẩn một element
+        //classList- đối tượng với các phương thức add/remove/toggle/contains, tốt cho các lớp riêng lẻ.
+      }
+    }, false);
+
+    // Create a new list item when clicking on the "Add" button
+    function newElement() { //tạo một hàm function với tên newElement
+      var li = document.createElement("li"); // tạo ra thẻ li và đặt biến cho nó tên li
+      var inputValue = document.getElementById("myInput").value;
+      //gán giá trị value cho id Myinput và đặt tên biến inputvalue
+      var t = document.createTextNode(inputValue);
+      //tạo ra nội dung và đặt cho no biến t(nội dung này là của input)
+      li.appendChild(t); //đẩy biến t vào li
+      if (inputValue === "") { //nếu inputvalue này rỗng thì 
+        alert("You must write something!"); // hiện ra hội thoại you must write something
+      } else { //hoặc nếu có giá trị được nhập vào thì:
+        document.getElementById("myUL").appendChild(li); //đẩy biến li vào Id"myUL"
+      }
+      document.getElementById("myInput").value = "";
+
+      var span = document.createElement("SPAN");
+      var txt = document.createTextNode("\u00D7");
+      span.className = "close";
+      span.appendChild(txt);
+      li.appendChild(span);
+
+      for (i = 0; i < close.length; i++) {
+        close[i].onclick = function () {
+          var div = this.parentElement;
+          div.style.display = "none";
+        }
+      }
+    }
+
+  </script>
+</body>
+
+</html>
